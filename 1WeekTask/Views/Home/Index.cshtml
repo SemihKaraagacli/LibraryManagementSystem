@@ -1,0 +1,39 @@
+﻿@model List<_1WeekTask.Models.Responsities.Books>  // Modelin Books türünden ve liste halinde verildiğini temsil ediyor.
+
+<div class="container-fluid px-4 pt-3">
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            BookTable
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>PublicationYear</th>
+                        <th>ISBN</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var book in Model) // yukarıda bulunan liste içerisindeki her elamanı buradaki tablo içinde döndürüyoruz.
+                    {
+                        <tr>
+                            <td>@book.Title</td>
+                            <td>@book.Author</td>
+                            <td>@book.PublicationYear</td>
+                            <td>@book.ISBN</td>
+                            <td><button class="btn btn-warning"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@book.Id">Detail</a></button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
