@@ -1,4 +1,4 @@
-﻿@model List<Books>  // Modelin Books türünden ve liste halinde verildiğini temsil ediyor.
+﻿@model List<BookViewModel>  // Modelin Books türünden ve liste halinde verildiğini temsil ediyor.
 
 <div class="container-fluid px-4 pt-3">
 
@@ -26,7 +26,11 @@
                             <td>@book.Author</td>
                             <td>@book.PublicationYear</td>
                             <td>@book.ISBN</td>
-                            <td><button class="btn btn-warning"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@book.Id">Detail</a></button></td>
+                            <td>
+                                <button class="btn btn-warning"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@book.Id">Detail</a></button>
+                                <button class="btn btn-primary"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Update" asp-route-id="@book.Id">Update</a></button>
+                                <button class="btn btn-danger"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Delete" asp-route-id="@book.Id">Delete</a></button>
+                            </td>
                         </tr>
                     }
                 </tbody>

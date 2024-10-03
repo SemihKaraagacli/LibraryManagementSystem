@@ -1,4 +1,4 @@
-﻿namespace LibraryManagementSystem.Models.Responsities
+﻿namespace LibraryManagementSystem.Models.Book.Responsities
 {
     public class Books // kitap propertyleri
     {
@@ -13,7 +13,8 @@
         public string Language { get; set; } = default!;
         public string Summary { get; set; } = default!;
         public int AvailableCopies { get; set; }
-        public string ImagePath { get; set; }=default!;
+        public IFormFile Image { get; set; } = default!;
+        public string ImagePath { get; set; } = default!;
 
     }
 }

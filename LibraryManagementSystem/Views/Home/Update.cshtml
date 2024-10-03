@@ -1,0 +1,72 @@
+﻿@model UpdateBookViewModel
+
+
+<div class="container mt-xxl-5">
+    <h3 class="text-center mb-3 font-weight-bold" style="font-size:40px; text-decoration:underline">Update Page</h3>
+    <form asp-action="Update" method="post" enctype="multipart/form-data" class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Id" class="form-label"></label>
+            <input asp-for="Id" type="text" class="form-control" value="@Model.Id" readonly />
+            <span asp-validation-for="Id" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" value="@Model.Title" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="Author" class="form-label"></label>
+            <input asp-for="Author" class="form-control" value="@Model.Author" />
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="PublicationYear" class="form-label"></label>
+            <input asp-for="PublicationYear" type="number" class="form-control" value="@Model.PublicationYear" />
+            <span asp-validation-for="PublicationYear" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="ISBN" class="form-label"></label>
+            <input asp-for="ISBN" class="form-control" value="@Model.ISBN" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="Genre" class="form-label"></label>
+            <input asp-for="Genre" class="form-control" value="@Model.Genre"/>
+            <span asp-validation-for="Genre" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="Publisher" class="form-label"></label>
+            <input asp-for="Publisher" class="form-control" value="@Model.Publisher" />
+            <span asp-validation-for="Publisher" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="PageCount" class="form-label"></label>
+            <input asp-for="PageCount" type="number" class="form-control" value="@Model.PageCount" />
+            <span asp-validation-for="PageCount" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="Language" class="form-label"></label>
+            <input asp-for="Language" class="form-control" value="@Model.Language" />
+            <span asp-validation-for="Language" class="text-danger"></span>
+        </div>
+        <div class="col-md-12 mb-3">
+            <label asp-for="Summary" class="form-label"></label>
+            <textarea asp-for="Summary" class="form-control" value="@Model.Summary"></textarea>
+            <span asp-validation-for="Summary" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="AvailableCopies" class="form-label"></label>
+            <input asp-for="AvailableCopies" type="number" class="form-control" value="@Model.AvailableCopies" />
+            <span asp-validation-for="AvailableCopies" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="Image" class="form-label"></label>
+            <input asp-for="Image" type="file" accept="image/*" class="form-control" value="@Model.ImagePath"/>
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</div>

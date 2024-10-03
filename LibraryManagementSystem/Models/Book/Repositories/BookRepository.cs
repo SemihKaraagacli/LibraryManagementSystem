@@ -1,11 +1,9 @@
-﻿namespace LibraryManagementSystem.Models.Responsities
+﻿namespace LibraryManagementSystem.Models.Book.Responsities
 {
-    public class BookRepository:IBookResponsity // İnterface'i miras aldı.
+    public class BookRepository : IBookRepository
     {
-        private static List<Books> bookList = new();
-        /*
-         private Books entity sınıfından üretilen ve türetilen bir bookList bulunmakta bu nesneyi kullanan her sınıf için ayrı ayrı üretilmeyip her kullanan sınıf için tek bir tane liste olması için static hale getirildi. Altında static constructor içerisinde listeye eklenecek olan veriler verilmiştir.
-         */
+        private static readonly List<Books> bookList = new();
+
         static BookRepository()
         {
             bookList.Add(new Books
@@ -158,85 +156,49 @@
                 AvailableCopies = 1,
                 ImagePath = "/image/KayıpZamanınİzinde.jpeg"
             });
-            bookList.Add(new Books()
-            {
-                Id = 11,
-                Title = "Yalnızız",
-                Author = "Adalet Ağaoğlu",
-                PublicationYear = 1973,
-                ISBN = "978-1234567891",
-                Genre = "Roman",
-                Publisher = "İletişim Yayınları",
-                PageCount = 290,
-                Language = "Türkçe",
-                Summary = "Modern Türkiye'de insan ilişkilerinin karmaşasını anlatıyor.",
-                AvailableCopies = 4,
-                ImagePath = "/image/Yalnızız.jpeg"
-            });
-            bookList.Add(new Books()
-            {
-                Id = 12,
-                Title = "Korkunun Kralı",
-                Author = "Stephen King",
-                PublicationYear = 1986,
-                ISBN = "978-2345678902",
-                Genre = "Korku",
-                Publisher = "Altın Kitaplar",
-                PageCount = 450,
-                Language = "Türkçe",
-                Summary = "Korkunun insan psikolojisi üzerindeki etkilerini inceliyor.",
-                AvailableCopies = 2,
-                ImagePath = "/image/KorkununKralı.jpeg"
-            });
-            bookList.Add(new Books()
-            {
-                Id = 13,
-                Title = "Yüreğim Var",
-                Author = "Buket Uzuner",
-                PublicationYear = 2015,
-                ISBN = "978-3456789013",
-                Genre = "Roman",
-                Publisher = "Everest Yayınları",
-                PageCount = 330,
-                Language = "Türkçe",
-                Summary = "Aşkın ve hayal gücünün sınırlarını zorlayan bir hikaye.",
-                AvailableCopies = 3,
-                ImagePath = "/image/YüreğimVar.jpeg"
-            });
-            bookList.Add(new Books()
-            {
-                Id = 14,
-                Title = "İstanbul Hatırası",
-                Author = "Ahmet Ümit",
-                PublicationYear = 2013,
-                ISBN = "978-4567890124",
-                Genre = "Polisiye",
-                Publisher = "Everest Yayınları",
-                PageCount = 400,
-                Language = "Türkçe",
-                Summary = "İstanbul'da geçen bir cinayet soruşturmasını ele alıyor.",
-                AvailableCopies = 5,
-                ImagePath = "/image/İstanbulHatırası.jpeg"
-            });
-            bookList.Add(new Books()
-            {
-                Id = 15,
-                Title = "Denizler Altında Yirmi Bin Fersah",
-                Author = "Jules Verne",
-                PublicationYear = 1870,
-                ISBN = "978-5678901235",
-                Genre = "Macera",
-                Publisher = "İş Bankası Kültür Yayınları",
-                PageCount = 350,
-                Language = "Türkçe",
-                Summary = "Denizaltı yaşamını keşfeden bir grup maceraperestin hikayesi.",
-                AvailableCopies = 6,
-                ImagePath = "/image/DenizlerAltındaYirmiBinFersah.jpeg"
-            });
         }
-        public List<Books> GetAllBook()   //Books Sınıfından oluşan bir metod oluşturulup içerisinde yukarıda Books listesinden oluşturulan bookList döndürülüyor.
+        public List<Books> GetAllBook()
         {
             return bookList;
+        }
+
+        public Books GetById(int id)
+        {
+            return bookList.FirstOrDefault(x => x.Id == id)!;
+        }
+
+        public Books Add(Books books)
+        {
+            bookList.Add(books);
+            return books;
+        }
+
+        public void Update(Books books)
+        {
+            var UpdateBook = bookList.FirstOrDefault(p => p.Id == books.Id);
+            if (UpdateBook != null)
+            {
+                UpdateBook.Title = books.Title;
+                UpdateBook.Author = books.Author;
+                UpdateBook.PublicationYear = books.PublicationYear;
+                UpdateBook.ISBN = books.ISBN;
+                UpdateBook.Genre = books.Genre;
+                UpdateBook.Publisher = books.Publisher;
+                UpdateBook.PageCount = books.PageCount;
+                UpdateBook.Language = books.Language;
+                UpdateBook.Summary = books.Summary;
+                UpdateBook.AvailableCopies = books.AvailableCopies;
+                UpdateBook.ImagePath = books.ImagePath; 
+                UpdateBook.Image = books.Image;
+            }
+        }
+        public void Delete(int id)
+        {
+            var bookDelete = bookList.FirstOrDefault(p => p.Id == id);
+            if (bookDelete != null)
+            {
+                bookList.Remove(bookDelete);
+            }
         }
     }
 }

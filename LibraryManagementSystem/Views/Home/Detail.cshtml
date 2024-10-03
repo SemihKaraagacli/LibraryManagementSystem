@@ -1,4 +1,4 @@
-﻿@model Books; //Modelin Books türünden olduğunu gösteriyor.
+﻿@model BookViewModel; //Modelin Books türünden olduğunu gösteriyor.
 
 <div class="container-fluid px-4 pt-3">
     <div class="container d-flex justify-content-center">
@@ -7,11 +7,7 @@
             <tbody>
                 <tr>
                     <th class="text-center align-middle">Book Picture</th>
-                    <td class=" text-center align-middle"><img src="@Model.ImagePath" alt="Alternate Text" class="" /></td> 
-                </tr>
-                <tr>
-                    <th class="text-center align-middle">ID</th>
-                    <td class="ps-4">@Model.Id</td>
+                    <td class=" text-center align-middle"><img src="@Model.ImagePath" alt="Alternate Text" style="max-width: 370px; max-height: 340px; width: auto; height: auto;" /></td>
                 </tr>
                 <tr>
                     <th class="text-center align-middle">Title</th>
