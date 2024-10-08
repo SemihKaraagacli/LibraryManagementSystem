@@ -1,0 +1,84 @@
+﻿@model IEnumerable<BooksViewModel>
+
+<div style="float: right; margin: 20px;">
+    <form asp-action="Index" method="get" enctype="multipart/form-data" class="form-inline">
+
+        <input type="text" name="search" placeholder="Search..." class="form-control mr-2" />
+
+        <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="title" value="true" />
+            <label class="form-check-label">Title</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" value="true" name="author" />
+            <label class="form-check-label">Author</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="publicationYear" value="true" />
+            <label class="form-check-label">Publication Year</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" value="true" name="isbn" />
+            <label class="form-check-label">ISBN</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="genre" value="true" />
+            <label class="form-check-label">Genre</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" value="true" name="publish" />
+            <label class="form-check-label">Publish</label>
+        </div>
+
+        <button class="btn btn-primary ml-4" type="submit">Search</button>
+    </form>
+</div>
+
+<div>
+
+    <table class="table">
+        <thead class="table-dark">
+            <tr class="text-center">
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Publication Year</th>
+                <th scope="col">ISBN</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Publisher</th>
+                <th scope="col">Page Count</th>
+                <th scope="col">Language</th>
+                <th scope="col">Summary</th>
+                <th scope="col">Available Copies</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Author</td>
+                    <td>@item.PublicationYear</td>
+                    <td>@item.ISBN</td>
+                    <td>@item.Genre</td>
+                    <td>@item.Publisher</td>
+                    <td>@item.PageCount</td>
+                    <td>@item.Language</td>
+                    <td>@item.Summary</td>
+                    <td>@item.AvailableCopies</td>
+                    <td>
+                        <a class="btn btn-success btn-custom" asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">Detail</a> |
+                        <a class="btn btn-warning btn-custom" asp-controller="Home" asp-action="Update" asp-route-id="@item.Id">Update</a> |
+                        <a class="btn btn-danger btn-custom" asp-controller="Home" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

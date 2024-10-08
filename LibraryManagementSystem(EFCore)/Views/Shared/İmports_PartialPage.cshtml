@@ -1,0 +1,68 @@
+﻿<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyaz Tema Bootstrap Sayfası</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff; /* Açık arka plan rengi */
+            color: #343a40; /* Koyu metin rengi */
+        }
+
+        .content {
+            flex: 1;
+            padding-top: 56px; /* Navbar yüksekliği */
+        }
+
+        footer {
+            background-color: #e9ecef; /* Açık footer rengi */
+            padding: 5px 0; /* Footer yüksekliği düşürüldü */
+            color: #343a40; /* Koyu metin rengi */
+        }
+
+        .footer-text {
+            display: flex;
+            justify-content: center; /* Yatayda ortalama */
+            align-items: center; /* Dikeyde ortalama */
+            height: 100%; /* Yüksekliği ayarla */
+        }
+
+        .navbar {
+            background-color: #e9ecef; /* Beyaz navbar rengi */
+        }
+
+        .form-control {
+            background-color: #ffffff; /* Beyaz arama kutusu rengi */
+            color: #343a40; /* Koyu metin rengi */
+        }
+
+            .form-control::placeholder {
+                color: #6c757d; /* Açık placeholder rengi */
+            }
+
+        .btn-outline-success {
+            color: #343a40; /* Koyu metin rengi */
+            border-color: #343a40; /* Koyu border rengi */
+        }
+
+            .btn-outline-success:hover {
+                background-color: #28a745; /* Hover durumu için yeşil arka plan */
+                color: #fff; /* Açık metin rengi */
+            }
+
+        .btn-custom {
+            font-size: 0.7rem; /* Yazı boyutunu azalt */
+            padding: 0.2rem 0.4rem; /* Dikey ve yatay boşlukları azalt */
+        }
+
+        .table td {
+            white-space: nowrap; /* Metni sarmasını engeller */
+            overflow: hidden; /* Taşan içeriği gizler */
+            text-overflow: ellipsis; /* Taşan metin için "..." ekler */
+            max-width: 150px; /* Maksimum genişlik belirleyin, isteğe bağlı */
+        }
+    </style>
+</head>

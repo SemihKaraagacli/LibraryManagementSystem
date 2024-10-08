@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+@Html.Partial("İmports_PartialPage")
+<body>
+
+    <!-- Navbar -->
+    @Html.Partial("Header_PartialPage")
+
+    <!-- İçerik -->
+    <div class="content">
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+    @Html.Partial("Footer_PartialPage")
+</body>
+</html>
