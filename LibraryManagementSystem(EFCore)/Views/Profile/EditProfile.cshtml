@@ -1,0 +1,41 @@
+﻿@using System.Security.Claims
+@model UserViewModel
+
+@{
+    var Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+}
+<div class="container mt-xxl-5">
+    <h3 class="text-center mb-3 font-weight-bold" style="font-size:40px; text-decoration:underline">Edit Profile Page</h3>
+    <partial name="_Error" />
+    <form asp-controller="Profile" asp-action="EditProfile" method="post" class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="@Id" class="form-label"></label>
+            <input readonly asp-for="@Id" class="form-control" />
+            <span asp-validation-for="@Id" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="FirstName" class="form-label"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="LastName" class="form-label"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="FavoriteBookGenre" class="form-label"></label>
+            <input asp-for="FavoriteBookGenre"  class="form-control" />
+            <span asp-validation-for="FavoriteBookGenre" class="text-danger"></span>
+        </div>
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a asp-action="Index" class="btn btn-secondary">Back to Profile</a>
+        </div>
+    </form>
+</div>

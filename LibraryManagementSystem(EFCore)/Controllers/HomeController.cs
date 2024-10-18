@@ -1,35 +1,63 @@
 using FluentValidation;
-using LibraryManagementSystem_EFCore_.Models.Book.Entities;
-using LibraryManagementSystem_EFCore_.Models.Book.Services;
-using LibraryManagementSystem_EFCore_.Models.Book.ViewModel;
+using LibraryManagementSystem.Services.Book.Services;
+using LibraryManagementSystem.Services.Book.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagementSystem_EFCore_.Controllers
 {
     public class HomeController(IBookService bookService) : Controller
     {
-        public IActionResult Index(string search, bool title, bool author, bool publicationYear, bool isbn, bool genre, bool publish)
+        public IActionResult Index(string message)
         {
-            var books = bookService.Search(search, title, author, publicationYear, isbn, genre, publish);
-            return View(books);
+            ViewBag.Message = message;
+            return View();
         }
+
+
+        [Authorize(Roles = "Admin,User")]
+        public IActionResult BookList(string search, bool title, bool author, bool publicationYear, bool isbn, bool genre, bool publisher)
+        {
+            //query incoming data in db
+            var books = bookService.Search(search, title, author, publicationYear, isbn, genre, publisher);
+            var booksToList = books.Data!.ToList();
+            return View(booksToList);
+        }
+
+
+        [Authorize(Roles = "Admin,User")]
         public IActionResult Details(int id)
         {
             var value = bookService.GetById(id);
-            return View(value);
+            if (value.AnyError)
+            {
+                TempData["error"] = value.Errors!.First();
+                return RedirectToAction("Index");
+            }
+            return View(value.Data);
         }
-        [HttpGet]
+
+
+
+        [HttpGet, Authorize(Roles = "Admin")]
         public IActionResult Add()
         {
             return View();
         }
+
+
         [HttpPost]
         public IActionResult Add(CreateBookViewModel entity)
         {
             try
             {
-                bookService.Add(entity);
-                return RedirectToAction("Index");
+                var result = bookService.Add(entity);
+                if (result.AnyError)
+                {
+                    TempData["error"] = result.GetFirstError;
+                    return View();
+                }
+                return RedirectToAction("BookList");
             }
             catch (ValidationException ex)
             {
@@ -42,19 +70,34 @@ namespace LibraryManagementSystem_EFCore_.Controllers
             return View(entity);
 
         }
-        [HttpGet]
+
+
+
+        [HttpGet, Authorize(Roles = "Admin")]
         public IActionResult Update(int id)
         {
             var value = bookService.GetById(id);
-            return View(value);
+            if (value.AnyError)
+            {
+                TempData["error"] = value.Errors!.First();
+                return RedirectToAction("Index");
+            }
+            return View(value.Data);
         }
+
+
         [HttpPost]
         public IActionResult Update(BooksViewModel entity)
         {
             try
             {
-                bookService.Update(entity);
-                return RedirectToAction("Index");
+                var result = bookService.Update(entity);
+                if (result.AnyError)
+                {
+                    TempData["error"] = result.Errors!.First();
+                    return View();
+                }
+                return RedirectToAction("BookList");
             }
             catch (ValidationException ex)
             {
@@ -66,10 +109,25 @@ namespace LibraryManagementSystem_EFCore_.Controllers
             }
             return View(entity);
         }
+
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
-            bookService.Delete(id);
-            return RedirectToAction("Index");
+            var value = bookService.Delete(id);
+            if (value.AnyError)
+            {
+                TempData["Error"] = value.Errors!.First();
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("BookList");
+        }
+
+
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

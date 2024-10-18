@@ -1,0 +1,23 @@
+﻿@model SignInViewModel
+<partial name="_Error" />
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <form class="bg-white p-4 rounded shadow" asp-controller="Auth" asp-action="SignIn" method="post" style="width: 400px;">
+        <h2 class="text-center mb-4">Giriş Yap</h2>
+        <div>
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div>
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div class="mb-3 mt-3 text-center">
+            <button type="submit" class="btn btn-primary">Giriş Yap</button>
+        </div>
+        <div class="text-center">
+            <a asp-action="VerifyEmail" class="text-muted">Şifremi Unuttum</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,41 @@
+﻿@model SignUpViewModel
+
+<partial name="_Error" />
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <form class="bg-white p-4 rounded shadow" asp-controller="Auth" asp-action="SignUp" method="post" style="width: 400px;">
+        <h2 class="text-center mb-4">Sign Up</h2>
+        <div>
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div>
+            <label asp-for="UserName" class="form-label"></label>
+            <input asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName"></span>
+        </div>
+        <div>
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control" type="password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div>
+            <label asp-for="FirstName" class="form-label"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName"></span>
+        </div>
+        <div>
+            <label asp-for="LastName" class="form-label"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName"></span>
+        </div>
+        <div>
+            <label asp-for="FavoriteBookGenre" class="form-label"></label>
+            <input asp-for="FavoriteBookGenre" class="form-control" />
+            <span asp-validation-for="FavoriteBookGenre"></span>
+        </div>
+        <div class="mb-3 mt-3 text-center">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </div>
+    </form>
+</div>

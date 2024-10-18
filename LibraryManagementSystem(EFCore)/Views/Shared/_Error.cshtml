@@ -1,0 +1,12 @@
+﻿@{
+    var errors = TempData["error"] as string;
+}
+
+@if (!string.IsNullOrEmpty(errors))
+{
+    <div class="alert alert-danger">
+       
+       <p>@errors</p>
+        
+    </div>
+}

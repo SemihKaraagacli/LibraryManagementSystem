@@ -1,0 +1,36 @@
+﻿@using System.Security.Claims
+@model UserViewModel
+@{
+    var Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+}
+
+<div class="container-fluid px-4 pt-3">
+    <h2 class="text-center mb-4 mt-3" style="text-decoration:underline">User Profile</h2>
+    <div class="container d-flex justify-content-center">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th class="text-center" style="width: 30%;">Username</th>
+                    <td class="ps-4 tdcss">@Model.FirstName</td>
+                </tr>
+                <tr>
+                    <th class="text-center" style="width: 30%;">Fullname</th>
+                    <td class="ps-4 tdcss">@Model.FirstName  @Model.LastName</td>
+                </tr>
+                <tr>
+                    <th class="text-center" style="width: 30%;">Email</th>
+                    <td class="ps-4 tdcss">@Model.Email</td>
+                </tr>
+                <tr>
+                    <th class="text-center" style="width: 30%;">Favorite Book Genre</th>
+                    <td class="ps-4 tdcss">@Model.FavoriteBookGenre</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-controller="Profile" asp-action="EditProfile" asp-route-id="@Id" class="btn btn-primary mx-2">Edit Profile</a>
+    <a asp-controller="Profile" asp-action="ChangePassword" asp-route-id="@Id" class="btn btn-secondary mx-2">Change Password</a>
+</div>

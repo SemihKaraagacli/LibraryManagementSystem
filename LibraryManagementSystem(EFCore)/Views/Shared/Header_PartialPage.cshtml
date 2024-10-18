@@ -1,4 +1,5 @@
-﻿<!-- Navbar -->
+﻿@using System.Security.Claims
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <a class="navbar-brand" asp-controller="Home" asp-action="Index">
         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
@@ -10,7 +11,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" asp-controller="Home" asp-action="Index">
+                <a class="nav-link" asp-controller="Home" asp-action="BookList">
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                     Book List
                 </a>
@@ -21,6 +22,48 @@
                     Book Create
                 </a>
             </li>
+            @if (!User.Identity!.IsAuthenticated)
+            {
+                <li class="nav-item active">
+                    <a class="nav-link" asp-controller="Auth" asp-action="SignUp">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Sign Up
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" asp-controller="Auth" asp-action="SignIn">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Sign In
+                    </a>
+                </li>
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item active">
+                    <a class="nav-link" asp-controller="Auth" asp-action="AddRoleToUser">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Add Role To User
+                    </a>
+                </li>
+            }
         </ul>
+
+        @if (User.Identity!.IsAuthenticated)
+        {
+            var Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                        @User.Identity.Name
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="Index" asp-route-id="@Id">Profilim</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-controller="Auth" asp-action="SignOut">Çıkış</a>
+                    </div>
+                </li>
+            </ul>
+        }
     </div>
 </nav>
