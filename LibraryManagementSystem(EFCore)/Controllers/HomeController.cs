@@ -1,19 +1,26 @@
 using FluentValidation;
 using LibraryManagementSystem.Services.Book.Services;
 using LibraryManagementSystem.Services.Book.ViewModel;
+using LibraryManagementSystem_EFCore_.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace LibraryManagementSystem_EFCore_.Controllers
 {
-    public class HomeController(IBookService bookService) : Controller
+    [ServiceFilter(typeof(ActionFilter))]
+    [ServiceFilter(typeof(ExceptionFilter))]
+    [ServiceFilter(typeof(AuthorizationFilter))]
+    [ServiceFilter(typeof(ResourceFilter))]
+    public class HomeController(IBookService bookService, IMemoryCache memoryCache) : Controller
     {
+        [HttpGet]
         public IActionResult Index(string message)
         {
+            HttpContext.Response.Headers.Add("API-Key", "qweqweq");
             ViewBag.Message = message;
             return View();
         }
-
 
         [Authorize(Roles = "Admin,User")]
         public IActionResult BookList(string search, bool title, bool author, bool publicationYear, bool isbn, bool genre, bool publisher)
@@ -123,11 +130,14 @@ namespace LibraryManagementSystem_EFCore_.Controllers
             return RedirectToAction("BookList");
         }
 
-
-
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        public IActionResult Error(ErrorViewModel model)
+        {
+            return View(model);
         }
     }
 }

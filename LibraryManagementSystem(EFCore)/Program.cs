@@ -11,16 +11,25 @@ using LibraryManagementSystem.Services.Book.Validations;
 using LibraryManagementSystem.Services.Book.ViewModel;
 using LibraryManagementSystem.Services.Mappers;
 using LibraryManagementSystem.Services.Users.Services;
+using LibraryManagementSystem_EFCore_.Filters;
+using LibraryManagementSystem_EFCore_.MiddleWare;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Coookie Key
 builder.Services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "Keys"))).SetDefaultKeyLifetime(TimeSpan.FromDays(30));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddMemoryCache();
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
 
 //Connection String Configuration
 builder.Services.AddDbContext<AppDbContext>(x =>
@@ -49,6 +58,10 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ActionFilter>();
+builder.Services.AddScoped<ExceptionFilter>();
+builder.Services.AddScoped<AuthorizationFilter>();
+builder.Services.AddScoped<ResourceFilter>();
 builder.Services.AddAutoMapper(typeof(BaseMapper));
 builder.Services.AddTransient<IValidator<CreateBookViewModel>, CreateBookValidation>();
 builder.Services.AddTransient<IValidator<BooksViewModel>, UpdateBookValidation>();
@@ -74,6 +87,15 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 var app = builder.Build();
+
+//app.UseMiddleware<HeaderApiKeyMiddleWare>(); //çalýþýyo fakat header eklemesini yapamadým.
+app.UseMiddleware<RequestLoggingMiddleware>();
+var blockedIps = new List<IPAddress>
+        {
+            IPAddress.Parse("::1")
+        };
+
+app.UseMiddleware<IpBlockingMiddleware>(blockedIps);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
